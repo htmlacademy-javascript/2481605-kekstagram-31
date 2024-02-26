@@ -52,3 +52,5 @@ const createUserPhoto = () => ({
     Array.from({length: getRandomInteger(0, 30)}, createComment)
 });
 const similarPhotos = Array.from({length: SIMILAR_PHOTOS_COUNT}, createUserPhoto);
+similarPhotos();
+console.log(similarPhotos);
