@@ -1,10 +1,5 @@
-//let string = 'Длина строки';
-
 function getLength(string, maxLength) {
-  if (string.length <= maxLength) {
-    return true;
-  }
-  return false;
+  return string.length <= maxLength;
 }
 getLength('Длина строки', 10);
 function isPalindrome(string) {
