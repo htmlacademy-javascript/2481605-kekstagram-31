@@ -16,6 +16,14 @@ const COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+const LIKES = {
+  MIN: 15,
+  MAX: 200
+};
+const QUANTITY_COMMENTS = {
+  MIN: 0,
+  MAX: 30
+};
 const SIMILAR_PHOTOS_COUNT = 25;
 const createCount = () => {
   let count = 0;
@@ -47,9 +55,9 @@ const createUserPhoto = () => ({
   id: idPhoto(),
   url: `photos/${unicUrl()}.jpg`,
   description: 'Сфотографировал недавно на выходных',
-  likes: getRandomInteger(15, 200),
+  likes: getRandomInteger(LIKES.MIN, LIKES.MAX),
   comments:
-    Array.from({length: getRandomInteger(0, 30)}, createComment)
+    Array.from({length: getRandomInteger(QUANTITY_COMMENTS.MIN, QUANTITY_COMMENTS.MAX)}, createComment)
 });
 const similarPhotos = Array.from({length: SIMILAR_PHOTOS_COUNT}, createUserPhoto);
 similarPhotos.values();
