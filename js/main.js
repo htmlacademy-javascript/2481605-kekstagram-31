@@ -1,2 +1,2 @@
-import {similarPhotos} from './data.js';
-similarPhotos.values();
+import {addThumbnail} from './add-thumbnails.js';
+window.console.log(addThumbnail);

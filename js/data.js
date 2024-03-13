@@ -25,12 +25,15 @@ const QUANTITY_COMMENTS = {
   MIN: 0,
   MAX: 30
 };
+const RANDOM_AVATARS = {
+  MIN: 0,
+  MAX: 6
+};
 const SIMILAR_PHOTOS_COUNT = 25;
 const createCount = () => {
   let count = 0;
   return function() {
-    count += 1;
-    return count;
+    return ++count;
   };
 };
 const idComment = createCount();
@@ -41,7 +44,7 @@ const createComment = () =>
   [
     {
       id: idComment(),
-      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+      avatar: `img/avatar-${getRandomInteger(RANDOM_AVATARS.MIN, RANDOM_AVATARS.MAX)}.svg`,
       message: getRandomArrayElement(COMMENTS),
       name: getRandomArrayElement(NAMES),
     }
