@@ -1,2 +1,1 @@
-import {addThumbnail} from './add-thumbnails.js';
-window.console.log(addThumbnail);
+import './big-photo-mode.js';
