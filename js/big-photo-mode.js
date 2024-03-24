@@ -3,7 +3,7 @@ import {picturesContainer} from './add-thumbnails.js';
 import {similarPhotos} from './data.js';
 const COUNT_STEP = 5;
 const bigPictureElement = document.querySelector('.big-picture');
-const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
+const bigPictureCloseButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img img');
 const socialCommentsElement = bigPictureElement.querySelector('.social__comments');
 const socialCommentTemplateElement = socialCommentsElement.querySelector('.social__comment');
@@ -89,7 +89,7 @@ const onPicturesContainerClick = (evt) => {
 };
 const initaddEventListeners = () => {
   picturesContainer.addEventListener('click', onPicturesContainerClick);
-  closeButtonElement.addEventListener('click', closeBigPicture);
+  bigPictureCloseButtonElement.addEventListener('click', closeBigPicture);
   commentsLoaderElement.addEventListener('click', showMoreComments);
 };
 
