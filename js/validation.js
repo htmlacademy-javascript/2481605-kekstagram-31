@@ -1,13 +1,11 @@
 const form = document.querySelector('.img-upload form');
 const textHashtags = form.querySelector('.text__hashtags');
 const textComments = form.querySelector('.text__description');
-textHashtags.addEventListener('keydown', (e) => e.stopPropagation());
-textComments.addEventListener('keydown', (e) => e.stopPropagation());
 
 const pristineValidate = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper-error',
+  errorTextClass: 'img-upload__field-wrapper--error',
   errorTextTag: 'div'
 });
 
@@ -15,6 +13,7 @@ const validateHashtags = (value) =>{
   if (value === ''){
     return true;
   }
+
   const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
   const valueArray = value.split(' ');
   const valueSet = new Set(valueArray);
@@ -30,15 +29,22 @@ const validateHashtags = (value) =>{
 };
 const validateComments = (value) => value.length === 0 || value.length <= 140;
 
-form.addEventListener('submit', (evt) => {
+const onFormSubmit = (evt) => {
   evt.preventDefault();
   const isValid = pristineValidate.validate();
   if (isValid) {
     form.submit();
   }
-});
-
-pristineValidate.addValidator(textHashtags, validateHashtags, 'Неверный хэштег');
-pristineValidate.addValidator(textComments, validateComments, 'Комментарий не должен превышать 140 символов');
+};
 
 
+const initFunctions = () => {
+  textHashtags.addEventListener('keydown', (e) => e.stopPropagation());
+  textComments.addEventListener('keydown', (e) => e.stopPropagation());
+  pristineValidate.addValidator(textHashtags, validateHashtags, 'Неверный хэштег');
+  pristineValidate.addValidator(textComments, validateComments, 'Комментарий не должен превышать 140 символов');
+  form.addEventListener('submit', onFormSubmit);
+};
+
+initFunctions();
+export{textHashtags, textComments};
