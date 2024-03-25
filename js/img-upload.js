@@ -1,8 +1,10 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+
 const SCALE_STEP = 25;
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 const PERCENT = '%';
+
 const imgUploadElement = document.querySelector('.img-upload');
 const imgUploadInputElement = imgUploadElement.querySelector('.img-upload__input');
 const imgUploadOverlayElement = imgUploadElement.querySelector('.img-upload__overlay');
@@ -16,7 +18,16 @@ const imgUploadEffectLevel = imgUploadPreviewContainerElement.querySelector('.im
 const effectLevelValue = imgUploadEffectLevel.querySelector('.effect-level__value');
 const imgUploadEffects = imgUploadOverlayElement.querySelector('.img-upload__effects');
 const effectLevelSlider = imgUploadEffectLevel.querySelector('.effect-level__slider');
+const imgUploadForm = imgUploadElement.querySelector('.img-upload__form');
 
+noUiSlider.create (effectLevelSlider, {
+  range: {
+    min: 0,
+    max:100
+  },
+  start: 0,
+  connect: 'lower'
+});
 const filters = {
   'none': {
     range: { min: 0, max: 100 },
@@ -56,27 +67,8 @@ const filters = {
   }
 };
 
-const showImgUpload = () => {
-  showElement(imgUploadOverlayElement);
-  modalOpenAdd();
-  document.addEventListener('keydown', onEscKeyDown);
-};
 
-const closeImgUpload = (evt) => {
-  if (evt) {
-    evt.preventDefault();
-  }
-  closeElement(imgUploadOverlayElement);
-  modalOpenRemove();
-  document.removeEventListener('keydown', onEscKeyDown);
-};
-function onEscKeyDown (evt) {
-  if (isEscapeKey(evt)) {
-    closeImgUpload();
-  }
-}
-
-const scaleDown = () => {
+const onScaleDownClick = () => {
   let currentValue = parseInt(scaleControlValue.value, 10);
   if (currentValue > SCALE_MIN) {
     currentValue -= SCALE_STEP;
@@ -84,7 +76,7 @@ const scaleDown = () => {
     imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
   }
 };
-const scaleUp = () => {
+const onScaleUpClick = () => {
   let currentValue = parseInt(scaleControlValue.value, 10);
   if (currentValue < SCALE_MAX) {
     currentValue += SCALE_STEP;
@@ -93,23 +85,13 @@ const scaleUp = () => {
   }
 };
 
-noUiSlider.create (effectLevelSlider, {
-  range: {
-    min: 0,
-    max:100
-  },
-  start: 0,
-  connect: 'lower'
-});
-
-imgUploadEffectLevel.style.display = 'none';
-const updateSlider = (evt) => {
+const onUpdateSliderChange = (evt) => {
   const effect = evt.target.value;
   const isNoneEffect = effect === 'none';
   if (isNoneEffect) {
-    imgUploadEffectLevel.style.display = 'none';
+    closeElement(imgUploadEffectLevel);
   } else {
-    imgUploadEffectLevel.style.display = 'block';
+    showElement(imgUploadEffectLevel);
   }
 
   const {range, start, step, apply} = filters[effect];
@@ -136,13 +118,50 @@ const updateSlider = (evt) => {
     effectLevelValue.value = value.toFixed(1);
   });
 };
+const resetInputFile = () => {
+  imgUploadInputElement.value = '';
+};
 
+const resetForm = () => {
+  imgUploadForm.reset();
+  scaleControlValue.value = SCALE_MAX + PERCENT;
+  imgUploadPreviewElement.style.transform = 'scale(1)';
+  document.querySelector('.effects__radio[value="none"]').checked = true;
+  imgUploadPreviewElement.style.filter = '';
+  if (effectLevelSlider.noUiSlider) {
+    effectLevelSlider.noUiSlider.set(filters['none'].start);
+  }
+  closeElement(imgUploadEffectLevel);
+
+};
+
+const onUploadChange = () => {
+  resetForm();
+  showElement(imgUploadOverlayElement);
+  modalOpenAdd();
+  document.addEventListener('keydown', onEscKeyDown);
+};
+const onUploadCloseClick = (evt) => {
+  if (evt) {
+    evt.preventDefault();
+  }
+  resetInputFile();
+  closeElement(imgUploadOverlayElement);
+  modalOpenRemove();
+  document.removeEventListener('keydown', onEscKeyDown);
+};
+function onEscKeyDown (evt) {
+  if (isEscapeKey(evt)) {
+    onUploadCloseClick();
+  }
+}
 const initaddEventListeners = () => {
-  imgUploadInputElement.addEventListener('change', showImgUpload);
-  previewCloseButtonElement.addEventListener('click',closeImgUpload);
-  scaleControlSmaller.addEventListener('click', scaleDown);
-  scaleControlBigger.addEventListener('click', scaleUp);
-  imgUploadEffects.addEventListener('change', updateSlider);
+  closeElement(imgUploadEffectLevel);
+  imgUploadInputElement.addEventListener('change', onUploadChange);
+  previewCloseButtonElement.addEventListener('click',onUploadCloseClick);
+  scaleControlSmaller.addEventListener('click', onScaleDownClick);
+  scaleControlBigger.addEventListener('click', onScaleUpClick);
+  imgUploadEffects.addEventListener('change', onUpdateSliderChange);
 };
 
 initaddEventListeners();
