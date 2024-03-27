@@ -47,4 +47,4 @@ const initFunctions = () => {
 };
 
 initFunctions();
-export{textHashtags, textComments};
+export{textHashtags, textComments, pristineValidate};

@@ -1,5 +1,5 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
-
+import {pristineValidate} from './validation.js';
 const SCALE_STEP = 25;
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
@@ -124,15 +124,13 @@ const resetInputFile = () => {
 
 const resetForm = () => {
   imgUploadForm.reset();
+  pristineValidate.reset();
   scaleControlValue.value = SCALE_MAX + PERCENT;
   imgUploadPreviewElement.style.transform = 'scale(1)';
   document.querySelector('.effects__radio[value="none"]').checked = true;
   imgUploadPreviewElement.style.filter = '';
-  if (effectLevelSlider.noUiSlider) {
-    effectLevelSlider.noUiSlider.set(filters['none'].start);
-  }
+  effectLevelSlider.value = 'none';
   closeElement(imgUploadEffectLevel);
-
 };
 
 const onUploadChange = () => {
