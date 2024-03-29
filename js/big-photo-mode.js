@@ -1,7 +1,9 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
-import {picturesContainer} from './add-thumbnails.js';
-import {similarPhotos} from './data.js';
+import {picturesContainerElement, } from './add-thumbnails.js';
+
+
 const COUNT_STEP = 5;
+
 const bigPictureElement = document.querySelector('.big-picture');
 const bigPictureCloseButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img img');
@@ -14,6 +16,7 @@ const commentShownCountElement = bigPictureElement.querySelector('.social__comme
 const commentTotalCountElement = bigPictureElement.querySelector('.social__comment-total-count');
 const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
 
+let newPhotos = [];
 let currentCount = 0;
 let globalComments = [];
 
@@ -57,7 +60,7 @@ const showMoreComments = () => {
 const openBigPicture = (pictureId) => {
   socialCommentsElement.innerText = '';
   currentCount = 0;
-  const currentPhoto = similarPhotos.find((photo) => photo.id === Number(pictureId));
+  const currentPhoto = newPhotos.find((photo) => photo.id === Number(pictureId));
   updateBigPictureInfo(currentPhoto);
   globalComments = currentPhoto.comments;
   commentTotalCountElement.textContent = globalComments.length;
@@ -88,9 +91,13 @@ const onPicturesContainerClick = (evt) => {
   }
 };
 const initaddEventListeners = () => {
-  picturesContainer.addEventListener('click', onPicturesContainerClick);
+  picturesContainerElement.addEventListener('click', onPicturesContainerClick);
   bigPictureCloseButtonElement.addEventListener('click', closeBigPicture);
   commentsLoaderElement.addEventListener('click', showMoreComments);
 };
+const initializeGallery = (photos) => {
+  newPhotos = photos;
+  initaddEventListeners();
+};
 
-initaddEventListeners();
+export {initializeGallery};

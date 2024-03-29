@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './util.js';
+/*import {getRandomInteger, getRandomArrayElement} from './util.js';
 const Names = [
   'Иван',
   'Валера',
@@ -55,4 +55,4 @@ const createUserPhoto = () => ({
     Array.from({length: getRandomInteger(QuantityComments.MIN, QuantityComments.MAX)}, createComment)
 });
 const similarPhotos = Array.from({length: SIMILAR_PHOTOS_COUNT}, createUserPhoto);
-export {similarPhotos};
+export {similarPhotos};*/
