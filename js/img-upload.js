@@ -1,51 +1,13 @@
-import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove, appendNotification, templateSuccess, templateError} from './util.js';
-import {errorHashtag, validateComments, isHashtagValid} from './validation.js';
-import {sendData} from './api.js';
+import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+import {imgUploadInputElement, imgUploadOverlayElement, imgUploadPreviewElement, previewCloseButtonElement, scaleControlSmallerElement,
+  scaleControlBiggerElement, scaleControlValueElement, effectLevelValueElement, imgUploadEffectsElement, effectLevelSliderElement,
+  imgUploadEffectLevelElement, imgUploadFormElement} from './search-elements.js';
+import {pristine} from './validation.js';
 
 const SCALE_STEP = 25;
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 const PERCENT = '%';
-
-const imgUploadElement = document.querySelector('.img-upload');
-const imgUploadInputElement = imgUploadElement.querySelector('.img-upload__input');
-const imgUploadOverlayElement = imgUploadElement.querySelector('.img-upload__overlay');
-const imgUploadPreviewContainerElement = imgUploadOverlayElement.querySelector('.img-upload__preview-container');
-const imgUploadPreviewElement = imgUploadPreviewContainerElement.querySelector('.img-upload__preview');
-const previewCloseButtonElement = imgUploadPreviewContainerElement.querySelector('.img-upload__cancel');
-const scaleControlSmallerElement = imgUploadPreviewContainerElement.querySelector('.scale__control--smaller');
-const scaleControlBiggerElement = imgUploadPreviewContainerElement.querySelector('.scale__control--bigger');
-const scaleControlValueElement = imgUploadPreviewContainerElement.querySelector('.scale__control--value');
-const imgUploadEffectLevelElement = imgUploadPreviewContainerElement.querySelector('.img-upload__effect-level');
-const effectLevelValueElement = imgUploadEffectLevelElement.querySelector('.effect-level__value');
-const imgUploadEffectsElement = imgUploadOverlayElement.querySelector('.img-upload__effects');
-const effectLevelSliderElement = imgUploadEffectLevelElement.querySelector('.effect-level__slider');
-const imgUploadFormElement = imgUploadElement.querySelector('.img-upload__form');
-const textHashtagsElement = imgUploadFormElement.querySelector('.text__hashtags');
-const textCommentsElement = imgUploadFormElement.querySelector('.text__description');
-const submitButton = imgUploadFormElement.querySelector('.img-upload__submit');
-
-
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Сохраняю...'
-};
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
-};
-
-const pristine = new Pristine(imgUploadFormElement, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
-});
-
 
 noUiSlider.create (effectLevelSliderElement, {
   range: {
@@ -148,7 +110,6 @@ const onUpdateSliderChange = (evt) => {
   });
 };
 
-
 const resetForm = () => {
   imgUploadFormElement.reset();
   pristine.reset();
@@ -179,43 +140,16 @@ function onEscKeyDown (evt) {
     onUploadCloseClick();
   }
 }
-pristine.addValidator(textHashtagsElement, isHashtagValid, () => errorHashtag(), 2, false);
-pristine.addValidator(textCommentsElement, validateComments, 'Максимальная длина 140 символов', 2, false);
 
-const sendFormData = async (formElement) => {
-
-  if (pristine.validate()) {
-    blockSubmitButton();
-    textHashtagsElement.value = textHashtagsElement.value.trim().replaceAll(/\s+/g, ' ');
-    textCommentsElement.value = textCommentsElement.value.trim().replaceAll(/\s+/g, ' ');
-    try {
-      await sendData(new FormData(formElement));
-      appendNotification(templateSuccess, () => onUploadCloseClick());
-    } catch {
-      appendNotification(templateError);
-    } finally {
-      unblockSubmitButton();
-    }
-  }
-};
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  sendFormData(evt.target);
-};
-
-const initAddEventListeners = () => {
-  textHashtagsElement.addEventListener('keydown', (e) => e.stopPropagation());
-  textCommentsElement.addEventListener('keydown', (e) => e.stopPropagation());
+const initUploadEvents = () => {
   imgUploadInputElement.addEventListener('change', onUploadChange);
   previewCloseButtonElement.addEventListener('click',onUploadCloseClick);
   scaleControlSmallerElement.addEventListener('click', onScaleDownClick);
   scaleControlBiggerElement.addEventListener('click', onScaleUpClick);
   imgUploadEffectsElement.addEventListener('change', onUpdateSliderChange);
-  imgUploadFormElement.addEventListener('submit', onFormSubmit);
-
 };
 
-initAddEventListeners();
+initUploadEvents();
 
-export {imgUploadFormElement};
+export {onUploadCloseClick};
 

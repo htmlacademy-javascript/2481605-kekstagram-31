@@ -1,20 +1,9 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
-import {picturesContainerElement, } from './add-thumbnails.js';
-
+import {picturesContainerElement, bigPictureCloseButtonElement, bigPictureImgElement, socialCommentTemplateElement,
+  likesCountElement, socialCaptionElement, commentLoaderElement, commentShownCountElement,
+  commentTotalCountElement, commentsLoaderElement, socialCommentsElement, bigPictureElement} from './search-elements.js';
 
 const COUNT_STEP = 5;
-
-const bigPictureElement = document.querySelector('.big-picture');
-const bigPictureCloseButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
-const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img img');
-const socialCommentsElement = bigPictureElement.querySelector('.social__comments');
-const socialCommentTemplateElement = socialCommentsElement.querySelector('.social__comment');
-const likesCountElement = bigPictureElement.querySelector('.likes-count');
-const socialCaptionElement = bigPictureElement.querySelector('.social__caption');
-const commentLoaderElement = bigPictureElement.querySelector('.comments-loader');
-const commentShownCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
-const commentTotalCountElement = bigPictureElement.querySelector('.social__comment-total-count');
-const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
 
 let newPhotos = [];
 let currentCount = 0;

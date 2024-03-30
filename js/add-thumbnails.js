@@ -1,5 +1,4 @@
-const gallareyTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const picturesContainerElement = document.querySelector('.pictures');
+import {picturesContainerElement, gallareyTemplate} from './search-elements';
 
 const addThumbnails = (({id, url, likes, comments}) => {
   const thumbnail = gallareyTemplate.cloneNode(true);
@@ -10,4 +9,4 @@ const addThumbnails = (({id, url, likes, comments}) => {
   picturesContainerElement.appendChild(thumbnail);
 });
 
-export{picturesContainerElement, addThumbnails};
+export{addThumbnails};
