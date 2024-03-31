@@ -1,10 +1,6 @@
+import {bodyElement, dataErrorTemplate} from './search-elements';
+
 const TIME_OUT = 5000;
-
-const bodyElement = document.querySelector('body');
-const dataErrorTemplate = bodyElement.querySelector('#data-error').content;
-const templateSuccess = bodyElement.querySelector('#success').content;
-const templateError = bodyElement.querySelector('#error').content;
-
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -16,6 +12,7 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 const isEscapeKey = (evt) => evt.key === 'Escape';
 const isEnterKey = (evt) => evt.key === 'Enter';
+
 const modalOpenAdd = () => {
   bodyElement.classList.add('modal-open');
 };
@@ -34,25 +31,6 @@ const showErrorMessage = () => {
   }, TIME_OUT);
 };
 
-const closeNotification = (evt) => {
-  evt.stopPropagation();
-  const existElement = document.querySelector('.success') || document.querySelector('.error');
-  const closeButton = existElement.querySelector('button');
-  if (evt.target === existElement || evt.target === closeButton || isEscapeKey(evt)){
-    existElement.remove();
-    bodyElement.removeEventListener('click', closeNotification);
-    bodyElement.removeEventListener('keydown', closeNotification);
-  }
-};
-
-const appendNotification = (template, trigger = null) => {
-  trigger?.();
-  const notificationNode = template.cloneNode(true);
-  bodyElement.append(notificationNode);
-  bodyElement.addEventListener('click', closeNotification);
-  bodyElement.addEventListener('keydown', closeNotification);
-};
-
 export {
   getRandomInteger,
   getRandomArrayElement,
@@ -63,7 +41,4 @@ export {
   modalOpenAdd,
   modalOpenRemove,
   showErrorMessage,
-  appendNotification,
-  templateSuccess,
-  templateError
 };

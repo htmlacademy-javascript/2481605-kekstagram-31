@@ -1,62 +1,19 @@
-// import {imgUploadFormElement, sliderValue} from './img-upload';
-/*
-const textHashtagsElement = imgUploadFormElement.querySelector('.text__hashtags');
-const textCommentsElement = imgUploadFormElement.querySelector('.text__description');
-
-
-const pristineValidate = new Pristine(imgUploadFormElement, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
-
-});
-
-const validateHashtags = (value) =>{
-  if (value === ''){
-    return true;
-  }
-
-  const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
-  const valueArray = value.split(' ');
-  const valueSet = new Set(valueArray);
-  if (valueArray.length !== valueSet.size || valueArray.length > 5){
-    return false;
-  }
-  for (const item of valueArray) {
-    if (!regexp.test(item)) {
-      return false;
-    }
-  }
-  return true;
-};
-
-const validateComments = (value) => value.length === 0 || value.length <= 140;
-
-
-const initFunctions = () => {
-  textHashtagsElement.addEventListener('keydown', (e) => e.stopPropagation());
-  textCommentsElement.addEventListener('keydown', (e) => e.stopPropagation());
-  pristineValidate.addValidator(textHashtagsElement, validateHashtags, 'Неверный хэштег');
-  pristineValidate.addValidator(textCommentsElement, validateComments, 'Комментарий не должен превышать 140 символов');
-  imgUploadFormElement.addEventListener('submit', (evt) => sendFormData(imgUploadFormElement, evt));
-};
-
-initFunctions();
-export{textHashtagsElement, textCommentsElement, pristineValidate};
-*/
-
+import {imgUploadFormElement, textHashtagsElement, textCommentsElement} from './search-elements';
 
 const MAX_HASHTAGS = 5;
 const MAX_SYMBOLS = 20;
 
+const pristine = new Pristine(imgUploadFormElement, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error',
+});
 
 const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
 
 let errorMessageHashtag = '';
 
-
 const errorHashtag = () => errorMessageHashtag;
-
 
 const validateComments = (value) => value.length === 0 || value.length <= 140;
 
@@ -106,71 +63,10 @@ const isHashtagValid = (value) => {
   });
 };
 
-export {errorHashtag, validateComments, isHashtagValid};
+pristine.addValidator(textHashtagsElement, isHashtagValid, () => errorHashtag(), 2, false);
+pristine.addValidator(textCommentsElement, validateComments, 'Максимальная длина 140 символов', 2, false);
 
-/*
-const validateComments = (value) => {
+textHashtagsElement.addEventListener('keydown', (e) => e.stopPropagation());
+textCommentsElement.addEventListener('keydown', (e) => e.stopPropagation());
 
-  if (value.length === 0) {
-    return {isValid:true};
-  }
-  if (value.length >= 140){
-    return {isValid: false, error: 'Комментарий не должен превышать 140 символов'};
-  }
-  return {isValid:true};
-};
-const validateHashtags = (value, MAX_SYMBOLS = 20, MAX_HASHTAGS = 5, regexp = /^#[a-zа-яё0-9]{1,19}$/i) => {
-  const inputText = value.toLowerCase().trim();
-  if (inputText.length === 0) {
-    return {isValid: true};
-  }
-  const inputArray = inputText.split(/\s+/);
-  if (inputArray.some((item) => item === '#')){
-    return {isValid: false, error: 'Хэштег не может состоять только из #'};
-  }
-  if (inputArray.some((item) => item.slice(1).includes('#'))){
-    return {isValid: false, error: 'Хэштеги должны разделяться пробелами'};
-  }
-  if (inputArray.some((item) => item[0] !== '#')){
-    return {isValid: false, error: 'Хэштег должен начинаться с символа #'};
-  }
-
-  if (inputArray.some((item, num, array) => array.includes(item, num + 1))){
-    return {isValid: false, error: 'Хэштеги не должны повторяться'};
-  }
-  if (inputArray.some((item) => item.length > MAX_SYMBOLS)){
-    return {isValid: false, error: `Максимальная длина хэштегов ${MAX_SYMBOLS} символов, включая #`};
-  }
-  if (inputArray.length > MAX_HASHTAGS){
-    return {isValid: false, error: `Максимальное количество хэштегов - ${MAX_HASHTAGS}`};
-  }
-  if (inputArray.some((item) => !regexp.test(item))){
-    return {isValid: false, error: 'Хэштег содержит недопустимые символы'};
-  }
-  return {isValid:true};
-};
-export {validateHashtags, validateComments};
-*/
-
-
-/*
-const isCommentsValid = (value) => {
-  errorMessageComment = '';
-  if (value.length === 0) {
-    return true;
-  }
-  const rules = [
-    {
-      check: value.length >= 140,
-      errorComment: 'Комментарий не должен превышать 140 символов'
-    }
-  ];
-  return rules.every((rule) => {
-    const isInvalid = rule.check;
-    if (isInvalid) {
-      errorMessageComment = rule.errorComment;
-    }
-    return !isInvalid;
-  });
-};
-*/
+export {pristine, textCommentsElement, textHashtagsElement};
