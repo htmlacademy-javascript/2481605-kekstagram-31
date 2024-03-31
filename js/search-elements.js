@@ -39,6 +39,9 @@ const templateError = bodyElement.querySelector('#error').content;
 const textHashtagsElement = imgUploadFormElement.querySelector('.text__hashtags');
 const textCommentsElement = imgUploadFormElement.querySelector('.text__description');
 
+const imgFiltersInactiveElement = document.querySelector('.img-filters--inactive');
+const imgFiltersElement = document.querySelector('.img-filters');
+
 export {gallareyTemplate,
   picturesContainerElement,
   bigPictureCloseButtonElement,
@@ -70,5 +73,7 @@ export {gallareyTemplate,
   templateSuccess,
   templateError,
   textHashtagsElement,
-  textCommentsElement
+  textCommentsElement,
+  imgFiltersInactiveElement,
+  imgFiltersElement,
 };
