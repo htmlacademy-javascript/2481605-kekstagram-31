@@ -1,19 +1,11 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
-import {picturesContainer} from './add-thumbnails.js';
-import {similarPhotos} from './data.js';
-const COUNT_STEP = 5;
-const bigPictureElement = document.querySelector('.big-picture');
-const bigPictureCloseButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
-const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img img');
-const socialCommentsElement = bigPictureElement.querySelector('.social__comments');
-const socialCommentTemplateElement = socialCommentsElement.querySelector('.social__comment');
-const likesCountElement = bigPictureElement.querySelector('.likes-count');
-const socialCaptionElement = bigPictureElement.querySelector('.social__caption');
-const commentLoaderElement = bigPictureElement.querySelector('.comments-loader');
-const commentShownCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
-const commentTotalCountElement = bigPictureElement.querySelector('.social__comment-total-count');
-const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
+import {picturesContainerElement, bigPictureCloseButtonElement, bigPictureImgElement, socialCommentTemplateElement,
+  likesCountElement, socialCaptionElement, commentLoaderElement, commentShownCountElement,
+  commentTotalCountElement, commentsLoaderElement, socialCommentsElement, bigPictureElement} from './search-elements.js';
 
+const COUNT_STEP = 5;
+
+let newPhotos = [];
 let currentCount = 0;
 let globalComments = [];
 
@@ -57,7 +49,7 @@ const showMoreComments = () => {
 const openBigPicture = (pictureId) => {
   socialCommentsElement.innerText = '';
   currentCount = 0;
-  const currentPhoto = similarPhotos.find((photo) => photo.id === Number(pictureId));
+  const currentPhoto = newPhotos.find((photo) => photo.id === Number(pictureId));
   updateBigPictureInfo(currentPhoto);
   globalComments = currentPhoto.comments;
   commentTotalCountElement.textContent = globalComments.length;
@@ -88,9 +80,13 @@ const onPicturesContainerClick = (evt) => {
   }
 };
 const initaddEventListeners = () => {
-  picturesContainer.addEventListener('click', onPicturesContainerClick);
+  picturesContainerElement.addEventListener('click', onPicturesContainerClick);
   bigPictureCloseButtonElement.addEventListener('click', closeBigPicture);
   commentsLoaderElement.addEventListener('click', showMoreComments);
 };
+const initializeGallery = (photos) => {
+  newPhotos = photos;
+  initaddEventListeners();
+};
 
-initaddEventListeners();
+export {initializeGallery};

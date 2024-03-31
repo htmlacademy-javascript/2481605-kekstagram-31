@@ -1,16 +1,12 @@
-import {similarPhotos} from './data.js';
-const gallareyTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const picturesContainer = document.querySelector('.pictures');
-const fragment = document.createDocumentFragment();
+import {picturesContainerElement, gallareyTemplate} from './search-elements';
 
-similarPhotos.forEach(({id, url, description, comments, likes}) => {
+const addThumbnails = (({id, url, likes, comments}) => {
   const thumbnail = gallareyTemplate.cloneNode(true);
   thumbnail.dataset.pictureId = id;
   thumbnail.querySelector('.picture__img').src = url;
-  thumbnail.alt = description;
-  thumbnail.querySelector('.picture__comments').textContent = comments.length;
   thumbnail.querySelector('.picture__likes').textContent = likes;
-  fragment.appendChild(thumbnail);
+  thumbnail.querySelector('.picture__comments').textContent = comments.length;
+  picturesContainerElement.appendChild(thumbnail);
 });
-picturesContainer.appendChild(fragment);
-export{picturesContainer};
+
+export{addThumbnails};
