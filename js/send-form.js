@@ -2,7 +2,7 @@ import {sendData} from './api.js';
 import {appendNotification} from './notifications.js';
 import {onUploadCloseClick} from './img-upload.js';
 import {pristine, textCommentsElement, textHashtagsElement} from './validation.js';
-import {submitButton, imgUploadFormElement} from './search-elements.js';
+import {submitButtonElement, imgUploadFormElement} from './search-elements.js';
 import {templateSuccess, templateError} from './search-elements.js';
 
 const SubmitButtonText = {
@@ -11,13 +11,13 @@ const SubmitButtonText = {
 };
 
 const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
+  submitButtonElement.toggleAttribute('disabled');
+  submitButtonElement.textContent = SubmitButtonText.SENDING;
 };
 
 const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+  submitButtonElement.toggleAttribute('disabled');
+  submitButtonElement.textContent = SubmitButtonText.IDLE;
 };
 
 const sendFormData = async (formElement) => {
@@ -37,9 +37,9 @@ const sendFormData = async (formElement) => {
   }
 };
 
-const onFormSubmit = (qwe) => {
-  qwe.preventDefault();
-  sendFormData(qwe.target);
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  sendFormData(evt.target);
 };
 
 const initSendForm = () => {

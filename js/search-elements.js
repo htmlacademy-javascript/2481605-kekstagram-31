@@ -29,7 +29,7 @@ const imgUploadEffectsElement = imgUploadOverlayElement.querySelector('.img-uplo
 const effectLevelSliderElement = imgUploadEffectLevelElement.querySelector('.effect-level__slider');
 const imgUploadFormElement = imgUploadElement.querySelector('.img-upload__form');
 
-const submitButton = imgUploadFormElement.querySelector('.img-upload__submit');
+const submitButtonElement = imgUploadFormElement.querySelector('.img-upload__submit');
 
 const bodyElement = document.querySelector('body');
 const dataErrorTemplate = bodyElement.querySelector('#data-error').content;
@@ -62,7 +62,7 @@ export {gallareyTemplate,
   effectLevelValueElement,
   imgUploadEffectsElement,
   effectLevelSliderElement,
-  submitButton,
+  submitButtonElement,
   imgUploadEffectLevelElement,
   imgUploadFormElement,
   bodyElement,

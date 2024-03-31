@@ -13,7 +13,9 @@ const closeNotification = (evt) => {
 };
 
 const appendNotification = (template, trigger = null) => {
-  trigger?.();
+  if (trigger) {
+    trigger();
+  }
   const notificationNode = template.cloneNode(true);
   bodyElement.append(notificationNode);
   bodyElement.addEventListener('click', closeNotification);
