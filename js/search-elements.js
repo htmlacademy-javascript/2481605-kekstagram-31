@@ -12,6 +12,7 @@ const commentLoaderElement = bigPictureElement.querySelector('.comments-loader')
 const commentShownCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
 const commentTotalCountElement = bigPictureElement.querySelector('.social__comment-total-count');
 const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
+const socialFooterTextElement = bigPictureElement.querySelector('.social__footer-text');
 
 
 const imgUploadElement = document.querySelector('.img-upload');
@@ -47,6 +48,7 @@ const imgPreviewElement = imgUploadPreviewElement.querySelector('img');
 const effectsPreviewElement = imgUploadEffectsElement.querySelectorAll('.effects__preview');
 
 export {gallareyTemplate,
+  socialFooterTextElement,
   picturesContainerElement,
   bigPictureCloseButtonElement,
   bigPictureImgElement,

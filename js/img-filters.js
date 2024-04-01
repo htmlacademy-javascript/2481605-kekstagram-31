@@ -1,6 +1,7 @@
 import {imgFiltersElement, picturesContainerElement} from './search-elements';
 import {debounce} from './util';
 import {addThumbnails,} from './add-thumbnails.js';
+
 const RANDOM_COUNT = 10;
 const FILTERS_BUTTON_ACTIVE = 'img-filters__button--active';
 const SORT_DISCUSSED = (a, b) => b.comments.length - a.comments.length;

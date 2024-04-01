@@ -1,7 +1,7 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
 import {picturesContainerElement, bigPictureCloseButtonElement, bigPictureImgElement, socialCommentTemplateElement,
   likesCountElement, socialCaptionElement, commentLoaderElement, commentShownCountElement,
-  commentTotalCountElement, commentsLoaderElement, socialCommentsElement, bigPictureElement} from './search-elements.js';
+  commentTotalCountElement, commentsLoaderElement, socialCommentsElement, bigPictureElement, socialFooterTextElement} from './search-elements.js';
 
 const COUNT_STEP = 5;
 
@@ -63,6 +63,7 @@ const closeBigPicture = (evt) => {
   if (evt) {
     evt.preventDefault();
   }
+  socialFooterTextElement.value = '';
   closeElement(bigPictureElement);
   modalOpenRemove();
   document.removeEventListener('keydown', onEscKeyDown);
