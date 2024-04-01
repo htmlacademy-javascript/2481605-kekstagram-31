@@ -29,6 +29,7 @@ const imgUploadEffectsElement = imgUploadOverlayElement.querySelector('.img-uplo
 const effectLevelSliderElement = imgUploadEffectLevelElement.querySelector('.effect-level__slider');
 const imgUploadFormElement = imgUploadElement.querySelector('.img-upload__form');
 
+
 const submitButtonElement = imgUploadFormElement.querySelector('.img-upload__submit');
 
 const bodyElement = document.querySelector('body');
