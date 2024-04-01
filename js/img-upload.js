@@ -3,6 +3,7 @@ import {imgUploadInputElement, imgUploadOverlayElement, imgUploadPreviewElement,
   scaleControlBiggerElement, scaleControlValueElement, effectLevelValueElement, imgUploadEffectsElement, effectLevelSliderElement,
   imgUploadEffectLevelElement, imgUploadFormElement} from './search-elements.js';
 import {pristine} from './validation.js';
+import {appendPreviewPhoto} from './append-preview-photo.js';
 
 const SCALE_STEP = 25;
 const SCALE_MIN = 25;
@@ -123,6 +124,7 @@ const resetForm = () => {
 const onUploadChange = () => {
   showElement(imgUploadOverlayElement);
   closeElement(imgUploadEffectLevelElement);
+  appendPreviewPhoto();
   modalOpenAdd();
   document.addEventListener('keydown', onEscKeyDown);
 };

@@ -42,6 +42,9 @@ const textCommentsElement = imgUploadFormElement.querySelector('.text__descripti
 const imgFiltersInactiveElement = document.querySelector('.img-filters--inactive');
 const imgFiltersElement = document.querySelector('.img-filters');
 
+const imgPreviewElement = imgUploadPreviewElement.querySelector('img');
+const effectsPreviewElement = imgUploadEffectsElement.querySelectorAll('.effects__preview');
+
 export {gallareyTemplate,
   picturesContainerElement,
   bigPictureCloseButtonElement,
@@ -76,4 +79,6 @@ export {gallareyTemplate,
   textCommentsElement,
   imgFiltersInactiveElement,
   imgFiltersElement,
+  imgPreviewElement,
+  effectsPreviewElement
 };
