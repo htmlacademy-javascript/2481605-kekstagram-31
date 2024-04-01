@@ -1,5 +1,5 @@
 import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
-import {imgUploadInputElement, imgUploadOverlayElement, imgUploadPreviewElement, previewCloseButtonElement, scaleControlSmallerElement,
+import {imgUploadInputElement, imgUploadOverlayElement, imgPreviewElement, previewCloseButtonElement, scaleControlSmallerElement,
   scaleControlBiggerElement, scaleControlValueElement, effectLevelValueElement, imgUploadEffectsElement, effectLevelSliderElement,
   imgUploadEffectLevelElement, imgUploadFormElement} from './search-elements.js';
 import {pristine} from './validation.js';
@@ -65,7 +65,7 @@ const onScaleDownClick = () => {
   if (currentValue > SCALE_MIN) {
     currentValue -= SCALE_STEP;
     scaleControlValueElement.value = currentValue + PERCENT;
-    imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
+    imgPreviewElement.style.transform = `scale(${currentValue / 100})`;
   }
 };
 const onScaleUpClick = () => {
@@ -73,7 +73,7 @@ const onScaleUpClick = () => {
   if (currentValue < SCALE_MAX) {
     currentValue += SCALE_STEP;
     scaleControlValueElement.value = currentValue + PERCENT;
-    imgUploadPreviewElement.style.transform = `scale(${currentValue / 100})`;
+    imgPreviewElement.style.transform = `scale(${currentValue / 100})`;
   }
 };
 
@@ -106,8 +106,9 @@ const onUpdateSliderChange = (evt) => {
 
   effectLevelSliderElement.noUiSlider.on('update', (values, handle) => {
     const value = parseFloat(values[handle]);
-    imgUploadPreviewElement.style.filter = apply(value);
-    effectLevelValueElement.value = value.toFixed(1);
+    imgPreviewElement.style.filter = apply(value);
+    const formattedValue = Number.isInteger(value) ? value.toString() : value.toFixed(1);
+    effectLevelValueElement.setAttribute('value', formattedValue);
   });
 };
 
@@ -115,9 +116,9 @@ const resetForm = () => {
   imgUploadFormElement.reset();
   pristine.reset();
   scaleControlValueElement.value = SCALE_MAX + PERCENT;
-  imgUploadPreviewElement.style.transform = 'scale(1)';
+  imgPreviewElement.style.transform = 'scale(1)';
   document.querySelector('.effects__radio[value="none"]').checked = true;
-  imgUploadPreviewElement.style.filter = '';
+  imgPreviewElement.style.filter = '';
   effectLevelSliderElement.value = 'none';
 };
 

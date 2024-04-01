@@ -12,6 +12,7 @@ const commentLoaderElement = bigPictureElement.querySelector('.comments-loader')
 const commentShownCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
 const commentTotalCountElement = bigPictureElement.querySelector('.social__comment-total-count');
 const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
+const socialFooterTextElement = bigPictureElement.querySelector('.social__footer-text');
 
 
 const imgUploadElement = document.querySelector('.img-upload');
@@ -28,6 +29,7 @@ const effectLevelValueElement = imgUploadEffectLevelElement.querySelector('.effe
 const imgUploadEffectsElement = imgUploadOverlayElement.querySelector('.img-upload__effects');
 const effectLevelSliderElement = imgUploadEffectLevelElement.querySelector('.effect-level__slider');
 const imgUploadFormElement = imgUploadElement.querySelector('.img-upload__form');
+
 
 const submitButtonElement = imgUploadFormElement.querySelector('.img-upload__submit');
 
@@ -46,6 +48,7 @@ const imgPreviewElement = imgUploadPreviewElement.querySelector('img');
 const effectsPreviewElement = imgUploadEffectsElement.querySelectorAll('.effects__preview');
 
 export {gallareyTemplate,
+  socialFooterTextElement,
   picturesContainerElement,
   bigPictureCloseButtonElement,
   bigPictureImgElement,
