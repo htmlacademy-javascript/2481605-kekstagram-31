@@ -22,6 +22,7 @@ const updateGallery = (filteredPhotos) => {
   photoElements.forEach((element) => element.remove());
   filteredPhotos.forEach(addThumbnails);
 };
+
 const debouncedUpdateGallery = debounce(updateGallery);
 const useFilters = () => {
   let filterPhotos = [];
