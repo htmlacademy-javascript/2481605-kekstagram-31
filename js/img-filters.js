@@ -4,8 +4,8 @@ import {addThumbnails,} from './add-thumbnails.js';
 
 const RANDOM_COUNT = 10;
 const FILTERS_BUTTON_ACTIVE = 'img-filters__button--active';
-const SORT_DISCUSSED = (a, b) => b.comments.length - a.comments.length;
-const SORT_RANDOM = () => 0.5 - Math.random();
+const sortDiscussed = (a, b) => b.comments.length - a.comments.length;
+const sortRandom = () => 0.5 - Math.random();
 
 let photos = [];
 
@@ -29,9 +29,9 @@ const useFilters = () => {
   if (currentFilter === Filters.DEFAULT) {
     filterPhotos = photos.slice();
   } else if (currentFilter === Filters.RANDOM) {
-    filterPhotos = photos.slice().sort(SORT_RANDOM).slice(0, RANDOM_COUNT);
+    filterPhotos = photos.slice().sort(sortRandom).slice(0, RANDOM_COUNT);
   } else if (currentFilter === Filters.DISCUSSED) {
-    filterPhotos = photos.slice().sort(SORT_DISCUSSED);
+    filterPhotos = photos.slice().sort(sortDiscussed);
   }
   debouncedUpdateGallery(filterPhotos);
 };

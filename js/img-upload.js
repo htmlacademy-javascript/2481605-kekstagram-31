@@ -1,4 +1,4 @@
-import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+import {closeElement, showElement,isEscapeKey, addModalOpen, removeModalOpen} from './util.js';
 import {imgUploadInputElement, imgUploadOverlayElement, imgPreviewElement, previewCloseButtonElement, scaleControlSmallerElement,
   scaleControlBiggerElement, scaleControlValueElement, effectLevelValueElement, imgUploadEffectsElement, effectLevelSliderElement,
   imgUploadEffectLevelElement, imgUploadFormElement} from './search-elements.js';
@@ -10,14 +10,17 @@ const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 const PERCENT = '%';
 
-noUiSlider.create (effectLevelSliderElement, {
-  range: {
-    min: 0,
-    max:100
-  },
-  start: 0,
-  connect: 'lower'
-});
+const createNoUiSlider = () => {
+  noUiSlider.create (effectLevelSliderElement, {
+    range: {
+      min: 0,
+      max:100
+    },
+    start: 0,
+    connect: 'lower'
+  });
+};
+
 const filters = {
   'none': {
     range: { min: 0, max: 100 },
@@ -126,7 +129,7 @@ const onUploadChange = () => {
   showElement(imgUploadOverlayElement);
   closeElement(imgUploadEffectLevelElement);
   appendPreviewPhoto();
-  modalOpenAdd();
+  addModalOpen();
   document.addEventListener('keydown', onEscKeyDown);
 };
 
@@ -134,7 +137,7 @@ const onUploadCloseClick = () => {
   closeElement(imgUploadOverlayElement);
   resetForm();
   resetInputFile();
-  modalOpenRemove();
+  removeModalOpen();
   document.removeEventListener('keydown', onEscKeyDown);
 };
 
@@ -152,6 +155,7 @@ const initUploadEvents = () => {
   imgUploadEffectsElement.addEventListener('change', onUpdateSliderChange);
 };
 
+createNoUiSlider();
 initUploadEvents();
 
 export {onUploadCloseClick};

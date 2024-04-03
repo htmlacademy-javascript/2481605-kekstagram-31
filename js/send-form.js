@@ -45,6 +45,5 @@ const onFormSubmit = (evt) => {
 const initSendForm = () => {
   imgUploadFormElement.addEventListener('submit', onFormSubmit);
 };
-initSendForm();
 
 export{initSendForm};
