@@ -1,4 +1,4 @@
-import {closeElement, showElement,isEscapeKey, modalOpenAdd, modalOpenRemove} from './util.js';
+import {closeElement, showElement,isEscapeKey, addModalOpen, removeModalOpen} from './util.js';
 import {picturesContainerElement, bigPictureCloseButtonElement, bigPictureImgElement, socialCommentTemplateElement,
   likesCountElement, socialCaptionElement, commentLoaderElement, commentShownCountElement,
   commentTotalCountElement, commentsLoaderElement, socialCommentsElement, bigPictureElement, socialFooterTextElement} from './search-elements.js';
@@ -42,7 +42,7 @@ const addComments = (comments) => {
   }
 };
 
-const showMoreComments = () => {
+const onCommentsLoaderClick = () => {
   addComments(globalComments);
 };
 
@@ -52,25 +52,25 @@ const openBigPicture = (pictureId) => {
   const currentPhoto = newPhotos.find((photo) => photo.id === Number(pictureId));
   updateBigPictureInfo(currentPhoto);
   globalComments = currentPhoto.comments;
-  commentTotalCountElement.textContent = globalComments.length;
+  commentTotalCountElement.textContent = globalComments.length.toString();
   addComments(globalComments);
   showElement(bigPictureElement);
-  modalOpenAdd();
+  addModalOpen();
   document.addEventListener('keydown', onEscKeyDown);
 };
 
-const closeBigPicture = (evt) => {
+const onCloseButtonClick = (evt) => {
   if (evt) {
     evt.preventDefault();
   }
   socialFooterTextElement.value = '';
   closeElement(bigPictureElement);
-  modalOpenRemove();
+  removeModalOpen();
   document.removeEventListener('keydown', onEscKeyDown);
 };
 function onEscKeyDown (evt) {
   if (isEscapeKey(evt)) {
-    closeBigPicture();
+    onCloseButtonClick();
   }
 }
 
@@ -80,14 +80,14 @@ const onPicturesContainerClick = (evt) => {
     openBigPicture(currentThumbnailPicture.dataset.pictureId);
   }
 };
-const initaddEventListeners = () => {
+const initEventListeners = () => {
   picturesContainerElement.addEventListener('click', onPicturesContainerClick);
-  bigPictureCloseButtonElement.addEventListener('click', closeBigPicture);
-  commentsLoaderElement.addEventListener('click', showMoreComments);
+  bigPictureCloseButtonElement.addEventListener('click', onCloseButtonClick);
+  commentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
 };
 const initializeGallery = (photos) => {
   newPhotos = photos;
-  initaddEventListeners();
+  initEventListeners();
 };
 
 export {initializeGallery};
